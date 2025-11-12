@@ -20,7 +20,7 @@ steps:
   ]
 
 # 3. Update the running Compute Engine instance
-- name: 'gcr.io/google-cloud-sdk/gcloud'
+- name: 'gcr.io/cloud-builders/gcloud'
   args: [
     'compute',
     'instances',

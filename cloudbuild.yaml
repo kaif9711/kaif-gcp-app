@@ -1,0 +1,28 @@
+steps:
+# 1. Build the Docker image
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-t',
+    'us-central1-docker.pkg.dev/kaif11/kaif-python-repo/flask-app:v1)', # TODO 1: Paste your full image name
+    '.'
+  ]
+
+# 2. Push the new image to Artifact Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'us-central1-docker.pkg.dev/kaif11/kaif-python-repo/flask-app:v1)'] # TODO 2: Paste your full image name
+
+# 3. Update the running Compute Engine instance
+- name: 'gcr.io/google-cloud-sdk/gcloud'
+  args: [
+    'compute',
+    'instances',
+    'update-container',
+    'kaif-app-instance',        # TODO 3: The name of your VM from main.tf
+    '--container-image', 'us-central1-docker.pkg.dev/kaif11/kaif-python-repo/flask-app:v1)', # TODO 4: Paste your full image name
+    '--zone', 'us-central1-a'     # TODO 5: The zone of your VM from main.tf
+  ]
+
+# Store the final image in the registry
+images:
+- 'us-central1-docker.pkg.dev/kaif11/kaif-python-repo/flask-app:v1)' # TODO 6: Paste your full image name
